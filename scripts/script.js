@@ -86,13 +86,18 @@ headerAbs.addEventListener('click', (e) => {
 
 
 
-const url = "https://kinopoiskapiunofficial.tech/"
+const host = "https://kinopoiskapiunofficial.tech"
 const hostName = "X-API-KEY"
 const hostValue = "3e8324a1-6d50-48f8-a88b-9c42d9d565e1"
 
 class Kino {
+    date
     constructor () {
-
+        this.date = new Date().getMonth()
+        this.curYear = new Date().getFullYear()
+        this.months = ['january','february','match','april','may','june','july','august',
+        'september','oktober','november','dedceember'] 
+            this.curMonth = this.months[this.date]
     }
 
     fOpen = async () => {
@@ -103,9 +108,15 @@ class Kino {
         })
 
         if(response.ok) return response.json()
-            else throw new Error(`Connect access to ${url}`);
-            
+            else throw new Error(`Connect access to ${url}`);       
     }
+
+
+    getTopMovies = (page) => this.fOpen(`${host}/api/v2.2/films/collections?type=TOP_250_TV_SHOWS&page=${page}`)
+    getSoloFilms = (id) => this.fOpen(`${host}/api/v2.2/films/${id}`)
 }
 const db = new Kino()
+
+
 console.log(db.fOpen())
+console.log(db.getSoloFilms(257386))
